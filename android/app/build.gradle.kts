@@ -1,19 +1,13 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("dev.flutter.flutter-gradle-plugin")
 }
 
 android {
     namespace = "com.example.infirst"
-    compileSdk = 34
-
-    defaultConfig {
-        applicationId = "com.example.infirst"
-        minSdk = 21
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-    }
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -24,6 +18,14 @@ android {
         jvmTarget = "17"
     }
 
+    defaultConfig {
+        applicationId = "com.example.infirst"
+        minSdk = 23
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("debug")
@@ -31,4 +33,6 @@ android {
     }
 }
 
-apply(from = "$rootDir/../flutter/packages/flutter_tools/gradle/flutter.gradle")
+flutter {
+    source = "../.."
+}
