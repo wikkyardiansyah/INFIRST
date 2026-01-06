@@ -30,7 +30,21 @@ jobs:
       # Disable analytics
       - name: Disable Flutter Analytics
         run: flutter --disable-analytics
-          
+        - name: Cache Flutter Pub
+  uses: actions/cache@v4
+  with:
+    path: |
+      ~/.pub-cache
+    key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+
+- name: Cache Gradle
+  uses: actions/cache@v4
+  with:
+    path: |
+      ~/.gradle/caches
+      ~/.gradle/wrapper
+    key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+  
       # Get Flutter dependencies
       - name: Get dependencies
         run: flutter pub get
